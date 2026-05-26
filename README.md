@@ -1,3 +1,22 @@
+# Architecture Summary
+
+This project is a Next.js (App Router) dashboard that favors server-side data fetching for reliability and client components for interactivity and animation.
+
+**Architectural choices:**
+- Use server components for data fetching and composition to keep initial HTML fast and SEO-friendly.
+- Keep Supabase access on the server (server-only env vars) and expose only minimal data to the client.
+- Use client components selectively for UI that needs state, effects, or animations (Framer Motion).
+
+**Server / Client split:**
+- Server components: pages and route-level data loaders (fetching courses, user activity). They render the initial UI and handle Supabase queries via `lib/supabase.ts` and `lib/data.ts`.
+- Client components: interactive tiles, grids, and animation wrappers (e.g., `BentoGrid`, card hover effects). These are small, focused, and receive serialized props from the server.
+
+**Challenges faced:**
+- Balancing animation-driven UX with zero layout-shift: animations use `transform`/`opacity` only and run in client components to avoid reflow.
+- Minimizing client bundle size by keeping data access and heavy logic on the server and only hydrating the minimal interactive bits.
+- Reliable dev experience when Supabase isn’t available: implemented mock fallbacks and skeleton loaders for graceful degradation.
+
+If you want this merged into the main `README.md` instead of a separate `readme.md`, tell me and I’ll update it in place.
 # LearnForge – Student Dashboard
 
 A **production-grade Next.js 14** learning dashboard built for the Frontend Intern Challenge. Features real Supabase data fetching, Framer Motion spring animations, and a fully responsive Bento Grid layout.

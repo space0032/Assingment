@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Scrollbar ───────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #1e2a35; border-radius: 999px; }
+
+/* ── Selection ──────────────────────────────────────────────────── */
+::selection { background: rgba(0, 229, 255, 0.15); color: #00e5ff; }
+
+/* ── Noise grain overlay (pseudo-element applied via a utility) ── */
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+/* ── Glow ring utility ───────────────────────────────────────────── */
+.glow-cyan  { box-shadow: 0 0 0 1px rgba(0,229,255,0.15), 0 0 20px rgba(0,229,255,0.07); }
+.glow-hover { transition: box-shadow 0.25s ease; }
+.glow-hover:hover { box-shadow: 0 0 0 1px rgba(0,229,255,0.3), 0 8px 32px rgba(0,229,255,0.12); }
+
+/* ── Shimmer skeleton ────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #0e1318 0%,
+    #1a252f 50%,
+    #0e1318 100%
+  );
+  background-size: 700px 100%;
+  animation: shimmer 1.6s linear infinite;
+}
